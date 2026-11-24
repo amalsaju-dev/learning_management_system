@@ -23,6 +23,9 @@ from accounts.views import TrainerSignUpView
 
 from accounts.views import TrainerProfileRetrieveUpdateView
 
+from course_management.views import CourseListCreateView
+
+from course_management.views import CourseRetrieveUpdateDeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,4 +38,12 @@ urlpatterns = [
 
     #token
     path("token/",ObtainAuthToken.as_view()),
+
+    #course
+    path("courses/",CourseListCreateView.as_view()),
+
+    path("courses/retrieve/<int:pk>/", CourseRetrieveUpdateDeleteView.as_view()),
+
+    
+
 ]
