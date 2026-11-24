@@ -10,8 +10,6 @@ from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIVi
 
 from rest_framework import authentication,permissions
 
-from rest_framework.response import Response
-
 class CourseListCreateView(ListCreateAPIView):
 
     authentication_classes = [authentication.TokenAuthentication]
@@ -24,9 +22,11 @@ class CourseListCreateView(ListCreateAPIView):
 
         return Course.objects.filter(trainer=self.request.user)
 
-    def perform_create(self, serializer):
+    def perform_create(self,serializer):
 
         serializer.save(trainer=self.request.user)
+
+   
 
 class CourseRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
@@ -34,7 +34,7 @@ class CourseRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
     permission_classes = [permissions.IsAuthenticated]
 
-    serializer_class = CourseSerializer
+    serializer_classs = CourseSerializer
 
     def get_queryset(self):
         
