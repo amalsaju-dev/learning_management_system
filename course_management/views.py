@@ -26,7 +26,6 @@ class CourseListCreateView(ListCreateAPIView):
 
         serializer.save(trainer=self.request.user)
 
-   
 
 class CourseRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
@@ -34,7 +33,7 @@ class CourseRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
     permission_classes = [permissions.IsAuthenticated]
 
-    serializer_classs = CourseSerializer
+    serializer_class = CourseSerializer
 
     def get_queryset(self):
         
