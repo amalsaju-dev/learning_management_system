@@ -2,11 +2,8 @@ from django.db import models
 
 # Create your models here.
 from module_management.models import Module
-
 from django.utils.text import slugify
-
 from accounts.models import User
-
 
 class Lesson(models.Model):
 
@@ -34,19 +31,18 @@ class Lesson(models.Model):
 
     def save(self,*args,**kwargs):
 
-         lesson_object = Lesson.objects.filter(self = self.module).last()
+         if not self.id:
 
-         if lesson_object :
+              lesson_object = Lesson.objects.filter(module = self.module).last()
 
-              self.order = lesson_object.order+1
+              if lesson_object:
 
-         else:
+                   self.order = lesson_object.order + 1
 
-            self.order = 1
-
+              else:
+                   self.order = 1
          if not self.slug:
-
-            self.slug = slugify(self.title)
+              self.slug = slugify(self.title)  
 
          super().save(*args,**kwargs)
 

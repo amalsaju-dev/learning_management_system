@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from accounts.models import User,TrainerProfile
+from accounts.models import User,TrainerProfile,StudentProfile
  
 class TrainerSerializer(serializers.ModelSerializer):
 
@@ -19,7 +19,6 @@ class TrainerSerializer(serializers.ModelSerializer):
          return User.objects.create_user(**validated_data,role ="tutor")
 
 
-
 class  TrainerProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -29,3 +28,22 @@ class  TrainerProfileSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
         read_only_fields = ["id","user","created_at","updated_at"]
+
+
+class StudentSerializer(TrainerSerializer):
+
+    def create(self,validated_data):
+
+        return User.objects.create_user(**validated_data,role ="student")
+    
+
+class StudentProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = StudentProfile
+
+        fields = "__all__"
+
+        read_only_fields = ["id","user","created_at","updated_at"]
+

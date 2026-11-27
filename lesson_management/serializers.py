@@ -1,8 +1,8 @@
-from rest_framework import serializers
-
+from  rest_framework import serializers
 from lesson_management.models import Lesson
 
-class LessonSerialiizer(serializers.ModelSerializer):
+
+class LessonSerializer(serializers.ModelSerializer):
 
     class Meta:
 
@@ -10,9 +10,7 @@ class LessonSerialiizer(serializers.ModelSerializer):
 
         fields = "__all__"
 
-        read_only_fields = ["id","module","order","slug","created_at","updated_at"]
-
-
+        read_only_fields=["id","module","slug","order","created_at","updated_at","created_by"]
         
 
 

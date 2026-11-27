@@ -23,6 +23,8 @@ from accounts.views import TrainerSignUpView
 
 from accounts.views import TrainerProfileRetrieveUpdateView
 
+from accounts.views import (StudentSignUpView,StudentProfileRetrieveUpdateView)
+
 from course_management.views import CourseListCreateView
 
 from course_management.views import CourseRetrieveUpdateDeleteView
@@ -31,6 +33,8 @@ from module_management.views import ModuleCreateView
 
 from module_management.views import ModuleRetrieveUpdateDeleteView
 
+from lesson_management.views import (LessonCreateView,LessonRetriveUpdateDestroyView)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -38,6 +42,10 @@ urlpatterns = [
 
     path("tutor/sign",TrainerSignUpView.as_view()),
     path("trainer/profile/",TrainerProfileRetrieveUpdateView.as_view()),
+
+    path("student/sign/",StudentSignUpView.as_view()),
+    path("student/profile/",StudentProfileRetrieveUpdateView.as_view()),
+    
 
 
     #token
@@ -51,4 +59,10 @@ urlpatterns = [
 
     path("module/",ModuleCreateView.as_view()),
     path("module/<int:pk>/",ModuleRetrieveUpdateDeleteView.as_view()),
+
+    #lesson
+
+    path("module/<int:pk>/lesson/",LessonCreateView.as_view()),
+    path("lesson/<int:pk>/",LessonRetriveUpdateDestroyView.as_view()),
+
 ]

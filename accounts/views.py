@@ -1,18 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 
 # Create your views here.
 
-from accounts.models import TrainerProfile
+from accounts.models import TrainerProfile,StudentProfile
 
 from accounts.serializer import TrainerProfileSerializer
 
-from accounts.serializer import TrainerSerializer
+from accounts.serializer import TrainerSerializer 
 
-from rest_framework.response import Response
+from accounts.serializer import StudentSerializer
 
-from rest_framework.views import APIView
+from accounts.serializer import StudentProfileSerializer
 
-from rest_framework.generics import CreateAPIView
+
+from rest_framework.generics import CreateAPIView,RetrieveUpdateAPIView
 
 from rest_framework import authentication,permissions
 
@@ -21,39 +22,33 @@ class TrainerSignUpView(CreateAPIView):
     serializer_class = TrainerSerializer
 
 
-class TrainerProfileRetrieveUpdateView(APIView):
+class TrainerProfileRetrieveUpdateView(RetrieveUpdateAPIView):
 
     authentication_classes = [authentication.TokenAuthentication]
 
     permission_classes = [permissions.IsAuthenticated]
 
+    serializer_class = TrainerProfileSerializer
 
-    def get(self,request):
-
-        auth_user = request.user
-
-        qs = TrainerProfile.objects.get(user=auth_user)
-
-        serializer_instance = TrainerProfileSerializer(qs)
-
-        return Response(serializer_instance.data)
-
-    def put(self,request):
-
-        form_data = request.data
-
-        instance = TrainerProfile.objects.get(user = request.user)
-
-        serializer_instance = TrainerProfileSerializer(data = form_data,instance=instance)
-
-        if serializer_instance.is_valid():
-
-            serializer_instance.save()
-
-            return Response(serializer_instance.data)
-
-        else:
-
-            return Response(serializer_instance.errors)
+    def get_object(self):
+        
+        return get_object_or_404(TrainerProfile,user = self.request.user)
 
 
+
+class StudentSignUpView(CreateAPIView):
+
+    serializer_class = StudentSerializer
+
+
+class StudentProfileRetrieveUpdateView(RetrieveUpdateAPIView):
+
+    authentication_classes = [authentication.TokenAuthentication]
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    serializer_class = StudentProfileSerializer
+
+    def get_object(self):
+
+        return get_object_or_404(StudentProfile,user=self.request.user)

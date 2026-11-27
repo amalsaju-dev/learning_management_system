@@ -10,6 +10,8 @@ from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIVi
 
 from rest_framework import authentication,permissions
 
+from accounts.permission import IsOwner
+
 class CourseListCreateView(ListCreateAPIView):
 
     authentication_classes = [authentication.TokenAuthentication]
@@ -31,7 +33,7 @@ class CourseRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
     authentication_classes = [authentication.TokenAuthentication]
 
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsOwner]
 
     serializer_class = CourseSerializer
 

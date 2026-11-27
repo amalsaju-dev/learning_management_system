@@ -6,11 +6,18 @@ from module_management.models import Module
 
 from module_management.serializer import ModuleSerializer
 
+from lesson_management.models import Lesson
+
+from django.db.models import Sum
+
 class CourseSerializer(serializers.ModelSerializer):
 
     module_count = serializers.SerializerMethodField(read_only = True)
 
     modules = serializers.SerializerMethodField(read_only = True)
+
+    total_duration = serializers.SerializerMethodField(read_only = True)
+
 
     class Meta:
 
@@ -35,6 +42,8 @@ class CourseSerializer(serializers.ModelSerializer):
         
         return serializer_instance.data
 
-    
+    def get_total_duration(self,obj):
+
+        Lesson.objects.filter(module__course=obj).values("duration").aggregate(total=Sum("duration"))["total"]
 
 
